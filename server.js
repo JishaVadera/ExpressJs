@@ -1,52 +1,43 @@
-// --------------------------lecture3----------------------------------------
+// --------------------------lecture4----------------------------------------
 
-const express = require('express');
-const server = express();   // create server
-const morgan = require('morgan');
 
-server.use(morgan('dev'));
+const express = require('express')
+const morgan = require('morgan')
+const app = express()
+const users = require('./friend.json')
+// console.log(users)
 
-const loggerFun = (req, res, next) => {
-    console.log(req.ip, req.url, req.method);
-    next();
-}
-server.use(loggerFun);
+app.use(morgan('dev'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
-// in-built middleware
-server.use(express.json());
-server.use(express.urlencoded({ extended: false}));
-server.use("/hello", express.static('public'));
-
-const myFun = (req, res, next) =>{
-    console.log(req.body);
-    next();
-    // if(req.query.age >= 18){
-    //     console.log('Success');
-    //     next();
-    // }else{
-    //     res.Json({message: "Sorry you are not allowed to visit this website ..."})
-    // }
-}
-
-// server.use(myFun);  // application
-
-// POST, GET PUT, PATCH, DELETE
-server.get('/', (req, res) => {
-    res.write('Welcome to Express');
-    res.end();
+app.get('/', (req, res) => {
+    res.send("Welcome To Express Server...")
 })
 
-server.get('/login', myFun, (req, res) => {
-    res.write({msg:'Welcome to Login Page'});
-    res.end();
+// CRUD 
+// Creat User 
+
+app.post('/user', (req, res) => {
+    // console.log(req.body) 
+    users.push(req.body)
+    res.json({ message: "User Added Success" })
 })
 
-server.post('/', (req, res) => {
-    // res.write('Welcome to Post Method');
-    res.send('Welcome to Post Method');
+// READ - Get All Users 
+
+app.get('/user', (req, res) => {
+    res.json(users)
 })
 
+// Get Single User   
 
-server.listen(8000, () => {
-    console.log('Server Start at http://localhost8000');
-});
+app.get('/user/:id', (req, res) => {
+    let id = +req.params.id
+    let item = users.find((user) => user.id === id)
+    res.json(item)
+})
+
+app.listen(1111, () => {
+    console.log("Server Start At http://localhost:1111")
+})
