@@ -1,4 +1,4 @@
-// --------------------------lecture4----------------------------------------
+// --------------------------lecture5----------------------------------------
 
 
 const express = require('express')
@@ -36,6 +36,32 @@ app.get('/user/:id', (req, res) => {
     let id = +req.params.id
     let item = users.find((user) => user.id === id)
     res.json(item)
+})
+
+// Replace Data - Put
+app.put("/user/:id" , (req,res) => {
+    let id = +req.params.id;
+    let userIndex = users.findIndex((item) => item.id === id);
+    users.splice(userIndex, 1 , req.body);
+    res.json({message: "User Replace Success" });
+})
+
+// Update data - PATCh
+
+app.patch("/user/:id" , (req,res) => {
+    let id = +req.params.id;
+    let userIndex = users.findIndex((item) => item.id === id);
+    let user = users[userIndex];
+    users.splice(userIndex , 1 , {...user , ...req.body});
+    res.json({message: "User Update Success" });
+})
+
+// Delete Data - DELETE
+app.delete("/user/:id" , (req,res) => {
+    let id = +req.params.id;
+    let userIndex = users.findIndex((item) => item.id === id);
+    users.splice(userIndex , 1);
+    res.json({message: "User Delete Success" });
 })
 
 app.listen(1111, () => {
