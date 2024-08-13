@@ -1,66 +1,36 @@
-const express = require('express')
-const morgan = require('morgan')
-const app = express()
-const product = require('./product.json')
+// const express = require('express')
+// const morgan = require('morgan')
+// const { updateUserPro } = require('./controller/product.controller')
+// const app = express()
 
-app.use(morgan('dev'))
-app.use(express.json())
-app.use(express.urlencoded({extended:false}))
+// app.use(morgan('dev'))
+// app.use(express.json())
+// app.use(express.urlencoded({extended:false}))
 
-app.get('/',(req,res) => {
-    res.send('Welcome To Express Server 1412')
-})
+// app.get('/',(req,res) => {
+//     res.send('Welcome To Express Server 1412')
+// })
 
-// CRUD
-// Create Product data
+// // CRUD
+// // Create Product data
 
-app.post('/product' , (req,res) => {
-    // console.log(req.body);
-    product.push(req.body);
-    res.json({message : "Product added Successfully"})
-})
+// app.post('/product' , addNewUserPro );
 
-// Read Product data - get all products
+// // Read Product data - get all products
 
-app.get('/product' , (req,res) => {
-    res.json(product)
-})
+// app.get('/product' , getAllUsersPro);
 
-// Get Single Product
+// // Get Single Product
 
-app.get('/product/:id' , (req,res) => {
-    let id = +req.params.id;
-    let pro = product.find(item => item.id === id);
-    res.json(pro)
-})
+// app.get('/product/:id' , getUserPro)
 
-// Replace Data - put
-app.put('/product/:id' , (req,res) => {
-    let id = +req.params.id;
-    let index = product.findIndex((item) => item.id === id);
-    product.splice(index , 1 , req.body);
-    res.json({message : "Product Replaced Successfully"});
-})
+// // Replace Data - put
+// app.put('/product/:id' , replaceUserPro)
 
-// Update data - PATCH
+// // Update data - PATCH
 
-app.patch('/product/:id' , (req,res) => {
-    let id = +req.params.id;
-    let index = product.findIndex((item) => item.id === id);
-    let product2 = product[index];
-    product.splice(index , 1 ,{...product2 , ...req.body});
-    res.json({message : "Product Updated Successfully"});
-})
+// app.patch('/product/:id' , updateUserPro)
 
-// Delete Data - DELETE
+// // Delete Data - DELETE
 
-app.delete("/product/:id" , (req,res) => {
-    let id = +req.params.id;
-    let index = product.findIndex((item) => item.id === id);
-    product.splice(index , 1);
-    res.json({message: "Product Delete Successfully" });
-})
-
-app.listen(1412, () => {
-    console.log("Server Start At http://localhost:1412")
-})
+// app.delete("/product/:id" , deleteUserPro)
