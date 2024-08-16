@@ -12,15 +12,15 @@ const {
 
 productRoutes.post('/' , addNewUserPro);
 
-productRoutes.get('/' , getAllUsersPro);
+// productRoutes.get('/' , getAllUsersPro);
 
-productRoutes.get('/:id',getUserPro);
+// productRoutes.get('/:id',getUserPro);
 
-productRoutes.put("/:id" , replaceUserPro);
+// productRoutes.put("/:id" , replaceUserPro);
 
-productRoutes.patch("/:id" , updateUserPro);
+// productRoutes.patch("/:id" , updateUserPro);
 
-productRoutes.delete("/:id" , deleteUserPro);
+// productRoutes.delete("/:id" , deleteUserPro);
 
 
 
