@@ -5,22 +5,19 @@ const {
     addNewUserPro,
     getAllUsersPro,
     getUserPro,
-    replaceUserPro,
     updateUserPro,
     deleteUserPro
 } = require('../controller/product.controller');
 
 productRoutes.post('/' , addNewUserPro);
 
-// productRoutes.get('/' , getAllUsersPro);
+productRoutes.get('/' , getAllUsersPro);
 
-// productRoutes.get('/:id',getUserPro);
+productRoutes.get('/productget',getUserPro);
 
-// productRoutes.put("/:id" , replaceUserPro);
+productRoutes.patch("/:id" , updateUserPro);
 
-// productRoutes.patch("/:id" , updateUserPro);
-
-// productRoutes.delete("/:id" , deleteUserPro);
+productRoutes.delete("/:id" , deleteUserPro);
 
 
 

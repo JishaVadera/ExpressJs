@@ -5,21 +5,18 @@ const {
     addNewUser,
     getAllUsers,
     getUser,
-    replaceUser,
     updateUser,
     deleteUser
 } = require('../controller/user.controller');
 
 userRoutes.post('/' , addNewUser);
 
-// userRoutes.get('/' , getAllUsers);
+userRoutes.get('/' , getAllUsers);
 
-// userRoutes.get('/:id',getUser);
+userRoutes.get('/getuser',getUser);
 
-// userRoutes.put("/:id" , replaceUser);
+userRoutes.patch("/update" , updateUser);
 
-// userRoutes.patch("/:id" , updateUser);
-
-// userRoutes.delete("/:id" , deleteUser);
+userRoutes.delete("/delete" , deleteUser);
 
 module.exports = userRoutes;
