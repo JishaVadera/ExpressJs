@@ -12,7 +12,15 @@ const productSchema = mongoose.Schema({
     },
     pWarranty : {
         type : Number
+    },
+    isDelete:{
+        type:Boolean,
+        default:false
     }
-});
+ },{
+    versionKey:false,
+    timestamps:true
+ });
+
 
 module.exports = mongoose.model('products', productSchema);

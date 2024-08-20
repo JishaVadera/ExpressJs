@@ -1,11 +1,12 @@
-// --------------------------lecture8----------------------------------------
-
-
+// --------------------------lecture9----------------------------------------
+require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
 const mongoose = require("mongoose");
+const port = process.env.PORT;
 const userRoutes = require('./routes/user.routes');
+
 const productRoutes = require('./routes/product.routes');
 // console.log(users)
 
@@ -21,11 +22,13 @@ app.use("/api/user" , userRoutes);
 
 app.use("/api/product" , productRoutes);
 
-app.listen(1412, () => {
+app.listen(port, () => {
     // Database Connection
     mongoose
-    .connect('mongodb://localhost:27017/ecommerce')
-    .then(() => console.log("Database connection established  successfully"))
-    .catch(() => console.log(err))
-    console.log("Server Start At http://localhost:1412")
+    .connect(process.env.MONGO_URI)
+    .then(() => {
+    console.log("Database connection established  successfully")
+    })
+    .catch((err) => console.log(err))
+    console.log(`Server Start At http://localhost:${port}`)
 })

@@ -2,7 +2,7 @@ const Product = require("../model/product.model");
 
 exports.addNewUserPro = async (req,res) => {
    try{
-    const product = await Product.findOne({pName : req.body.pName});
+    let product = await Product.findOne({pName : req.body.pName , isDelete: false});
     if(product){
     return res.status(400).json({message : "Product Already Exists"});
    }
@@ -17,7 +17,7 @@ exports.addNewUserPro = async (req,res) => {
 
 exports.getAllUsersPro = async(req,res) => {
     try{
-      let product = await Product.find();
+      let product = await Product.find({isDelete : false});
       res.status(200).json(product);
     }  catch(err) {
       console.log(err);
@@ -57,14 +57,12 @@ exports.updateUserPro = async(req,res) => {
 
 exports.deleteUserPro = async(req,res) => {
     try {
-      let product = await Product.findById(req.query.productId);
+      let product = await Product.findById({_id : req.query.productId , isDelete : false});
       console.log(product);
-      if (!user) {
+      if (!product) {
         return res.status(404).json({message : "Product not found"});
       }
-      // await Product.deleteOne({_id : product._id});
-      // await Product.findByIdAndDelete(req.query.productId);
-      product = await Product.findOneAndDelete({_id: product._id});
+      product = await Product.findByIdAndUpdate(product._id , {isDelete:true} , {new : true});
       res.status(200).json({message : "Product deleted successfully"});
     } catch (err) {
       console.log(err);

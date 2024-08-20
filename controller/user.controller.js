@@ -3,7 +3,7 @@ const User = require("../model/user.model");
 
 exports.addNewUser = async(req, res) => {
    try{
-    let user = await User.findOne({email : req.body.email});
+    let user = await User.findOne({email : req.body.email , isDelete: false});
     if(user){
       return res.status(400).json({message : "User Already Exists"});
     }
@@ -18,7 +18,7 @@ exports.addNewUser = async(req, res) => {
 
 exports.getAllUsers = async(req, res) => {
     try {
-      let user = await User.find();
+      let user = await User.find({isDelete : false});
       res.status(200).json(user);
     } catch (err) {
       console.log(err);
@@ -59,15 +59,12 @@ exports.updateUser = async(req,res) => {
 
 exports.deleteUser =  async(req,res) => {
     try {
-      let user = await User.findById(req.query.userId);
+      let user = await User.findOne({_id :req.query.userId , isDelete: false});
       console.log(user);
       if (!user) {
          return res.status(404).json({message : "User not found"});
       }
-      // await User.deleteOne({_id : user._id});
-      // user = await User.deleteOne({_id : user._id})
-      user = await User.findOneAndDelete({_id: user._id})
-      // user = await User.findByIdAndDelete(user._id);
+      user = await User.findByIdAndUpdate(user._id , {isDelete:true} , {new : true});
       res.status(200).json({message : "User deleted successfully"});
     } catch (err) {
       console.log(err);
