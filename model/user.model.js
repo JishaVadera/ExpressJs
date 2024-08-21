@@ -8,6 +8,15 @@ const mongoose = require('mongoose')
     email:{
         type: String,
     },
+    password:{
+        type: String,
+    },
+    mobileNo: {
+        type: Number,
+    },
+    profileImage: {
+        type: String,
+    },
     age:{
         type:Number,
     },

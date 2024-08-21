@@ -19,6 +19,4 @@ productRoutes.patch("/:id" , updateUserPro);
 
 productRoutes.delete("/:id" , deleteUserPro);
 
-
-
 module.exports = productRoutes;
