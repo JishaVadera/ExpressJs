@@ -4,14 +4,19 @@ const jwt = require("jsonwebtoken");
 
 exports.registerUser = async (req, res) => {
   try {
+    let imagePath = "";
     let user = await User.findOne({ email: req.body.email, isDelete: false });
     if (user) {
       return res.json({ message: "User Already Exists..." });
     }
-    let hashpassword = await bcrypt.hash(req.body.password, 10);
-    // console.log(hashpassword)
-    user = await User.create({ ...req.body, password: hashpassword });
-    res.status(201).json({ user, message: "Register Successfully..." });
+    if (req.file) {
+      console.log(req.file);
+      // imagePath = req.file.path.replace(/\\/g,"/");
+    }
+    // let hashpassword = await bcrypt.hash(req.body.password, 10);
+    // // console.log(hashpassword)
+    // user = await User.create({ ...req.body, password: hashpassword ,profileImage : imagePath});
+    // res.status(201).json({ user, message: "Register Successfully..." });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Server Error" });
@@ -116,3 +121,25 @@ exports.updatePassword = async (req, res) => {
     res.status(500).json({ message: "Server Error..." });
   }
 };
+
+exports.specialUser = async (req, res) => {
+  try {
+      // let user = {
+      //     firstName: 'abc',
+      //     lastName: 'xyz',
+      //     age: 40,
+      //     email: "abc@xyz.com",
+      //     mobileNo: "1234567890",
+          
+      // }
+      let user = await User.findOne({ firstname: req.query.name, isDelete: false });
+      if(!user){
+          return res.render('notfound.ejs');
+      }
+      res.render('student.hbs',{user});
+      // res.render('user.ejs',{user});
+  } catch (err) {
+      console.log(err);
+      res.status(500).json({message: "Server Error"});
+  }
+}
